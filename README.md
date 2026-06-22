@@ -1,8 +1,17 @@
 # Axiom Core Framework
 
-The **Axiom Core Framework** is a headless, highly modular, ES6-compliant JavaScript mathematical engine designed to simulate autonomous agents based on Karl Friston's **Active Inference** and the **Free Energy Principle (FEP)**. 
+<div align="center">
+  <a href="https://aiupscale.com#demo" target="_blank">
+    <img src="https://img.shields.io/badge/🚀_Launch_Live_Simulation-AiUpScale.com-8B5CF6?style=for-the-badge&labelColor=0f172a" alt="Launch Live Simulation on AiUpScale" />
+  </a>
+</div>
+<br/>
 
-Extracted from the core of the [AiUpScale / Neuromantix] cognitive simulation platform, this package runs a highly optimized 17-step autopoietic loop entirely decoupled from any DOM or browser rendering logic, making it perfectly suited for Node.js, V8 server environments, and raw data pipelines.
+The **Axiom Core Framework** is the open-source mathematical engine that powers the **[AiUpScale](https://aiupscale.com)** cognitive architecture. 
+
+**AiUpScale** is a research and development platform exploring the boundaries of artificial consciousness and emergent swarm behaviors. By mathematically modeling Karl Friston's **Active Inference** and the **Free Energy Principle (FEP)**, we aim to bridge the gap between reactive AI and true autonomous agency. While the live web platform features rich visualizations, real-time telemetry, and our proprietary flavor weightings, this GitHub repository provides you with the raw, open-source mathematical core.
+
+Extracted directly from the AiUpScale ecosystem, this package runs a highly optimized 17-step autopoietic loop entirely decoupled from any DOM or browser rendering logic, making it perfectly suited for Node.js, V8 server environments, and raw data pipelines.
 
 ## Key Features
 
