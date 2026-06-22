@@ -1,0 +1,12 @@
+{
+  "name": "axiom-core-framework",
+  "version": "1.0.0-alpha",
+  "description": "Headless mathematical engine based on Active Inference and FEP.",
+  "main": "src/AxiomCore.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/AxiomCore.js"
+  },
+  "author": "",
+  "license": "MIT"
+}
