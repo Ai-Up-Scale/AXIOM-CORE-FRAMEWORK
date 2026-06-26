@@ -1,8 +1,8 @@
 # Axiom Core Framework
 
 <div align="center">
-  <a href="https://aiupscale.com#demo" target="_blank">
-    <img src="https://img.shields.io/badge/🚀_Launch_Live_Simulation-AiUpScale.com-8B5CF6?style=for-the-badge&labelColor=0f172a" alt="Launch Live Simulation on AiUpScale" />
+  <a href="https://aiupscale.com/demo" target="_blank">
+    <img src="https://aiupscale.com/images/AiUpScale-Full-Logo.svg" alt="Launch Live Simulation on AiUpScale" width="300" />
   </a>
 </div>
 <br/>
