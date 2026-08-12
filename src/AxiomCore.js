@@ -132,6 +132,19 @@ export class AxiomCore {
         this._step16_GoalGenesis();
         this._step17_PhiMeasurement();
 
+        /**
+         * Output Payload Example:
+         * {
+         * "action": [0.12, -0.85, 0.44], // Tangent vector for movement/interaction
+         * "state": {
+         * "sentienceScore": 102.5,
+         * "subjectiveEmergence": true,
+         * "freeEnergy": 0.042,
+         * "tick": 1420,
+         * "activeRescueTarget": "agent_88"
+         * }
+         * }
+         */
         // Return the active states (actions) to affect the external environment
         return {
             action: this.model.sampleAction(),
@@ -175,7 +188,10 @@ export class AxiomCore {
     }
     _step14_DevelopmentalLearning() { /* Piagetian schema transfers */ }
     _step15_CuriosityReward() { 
-        // Epistemic foraging and Global Distress (Empathy override)
+        // COMMERCIAL HOOK: Mathematical Empathy
+        // GlobalDistress evaluates the Free Energy (suffering/uncertainty) of neighboring agents.
+        // This allows agents to dynamically override their own pragmatic goals to "rescue" or assist 
+        // a neighbor with high prediction error, creating a quantifiable, scalable model for empathy.
         if (this.currentEnvironment.neighborhood) {
             const empathyResponse = this.globalDistress.evaluateEmpathyResponse(
                 this.currentEnvironment.neighborhood,
