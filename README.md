@@ -19,7 +19,7 @@
 
 ## Live Telemetry in Action
 
-![Live Simulation Telemetry](https://github.com/Ai-Up-Scale/AXIOM-CORE-FRAMEWORK/raw/main/videos/AiUpscale-presentation.mp4)
+https://github.com/Ai-Up-Scale/AXIOM-CORE-FRAMEWORK/blob/main/videos/AiUpscale-presentation.mp4
 
 The **Axiom Core Framework** is the open-source mathematical engine that powers the **[AiUpScale](https://aiupscale.com)** cognitive architecture. 
 
