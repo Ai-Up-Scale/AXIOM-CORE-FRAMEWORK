@@ -8,6 +8,10 @@
   <a href="https://aiupscale.com/demo" target="_blank">
     <img src="https://aiupscale.com/images/AiUpScale-Full-Logo.svg" alt="Launch Live Simulation on AiUpScale" width="300" />
   </a>
+  <br/><br/>
+  <a href="https://aiupscale.com/whitepaper" target="_blank">
+    <img src="https://img.shields.io/badge/Read_The_Whitepaper-8A2BE2?style=for-the-badge&logo=read-the-docs&logoColor=white" alt="Read the Whitepaper" />
+  </a>
 </div>
 <br/>
 
