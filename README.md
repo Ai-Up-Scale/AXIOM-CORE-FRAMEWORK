@@ -1,11 +1,25 @@
 # Axiom Core Framework
 
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![npm package](https://img.shields.io/badge/npm-latest-blue.svg)](https://www.npmjs.com/)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-ff69b4.svg)](https://aiupscale.com/demo)
+
 <div align="center">
   <a href="https://aiupscale.com/demo" target="_blank">
     <img src="https://aiupscale.com/images/AiUpScale-Full-Logo.svg" alt="Launch Live Simulation on AiUpScale" width="300" />
   </a>
 </div>
 <br/>
+
+## Why it Matters: The Cognitive Wall
+
+**The Problem:** Current Large Language Models (LLMs) hit a cognitive wall: they are stateless, disembodied, and suffer from performative collapse.
+
+**The Solution:** Axiom Core scales consciousness and continuous learning via Active Inference.
+
+## Live Telemetry in Action
+
+<video src="https://github.com/Ai-Up-Scale/AXIOM-CORE-FRAMEWORK/raw/main/videos/AiUpscale-presentation.mp4" width="100%" controls autoplay loop muted></video>
 
 The **Axiom Core Framework** is the open-source mathematical engine that powers the **[AiUpScale](https://aiupscale.com)** cognitive architecture. 
 
