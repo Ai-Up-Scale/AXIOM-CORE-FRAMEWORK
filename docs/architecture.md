@@ -3,6 +3,9 @@
 ## The Falsifiable Emergent Sentience Framework (FESF)
 The Axiom Core Framework is the headless, decoupled mathematical engine of the Falsifiable Emergent Sentience Framework (FESF). It operates purely on data structures and JSON payloads to execute the Active Inference and Free Energy Principle (FEP) mathematical models. By removing visual rendering overhead (HTML canvas, DOM manipulation), the framework offers a highly modular, server-deployable architecture for simulating cognitive states, generating expected free energy (EFE) predictions, and optimizing action selection via gradient descent.
 
+### The Enterprise Moat: Zero-DOM Architecture
+Because the Axiom Core Framework is completely headless and decoupled from browser APIs, it isn't limited to web dashboards. This engine can be deployed at scale inside robotics operating systems (ROS), Unity/Unreal game engines for autonomous NPC cognition, or across massive distributed server swarms. We scale cognitive architectures, not just raw compute.
+
 ## Mathematical Constraints and Thresholds
 
 The framework maintains systemic homeostasis by adhering to three core mathematical axioms enforced via dynamic weights:
@@ -25,6 +28,35 @@ To prevent runaway feedback loops and mathematical instability, the system enfor
 Activating one automatically prunes its conflicting counterpart, guaranteeing that no combination of the 49% flavor menu and the 75% core baseline can theoretically exceed 117.0%.
 
 ## The 17-Step Autopoietic Pipeline
+
+```mermaid
+graph TD
+    subgraph Input [Phase 1: Input & Perception]
+        A[1. Perceive] --> B[2. GWT Broadcast]
+    end
+    subgraph Processing [Phase 2: Cognitive Processing]
+        B --> C[3. Think]
+        C --> D[4. Remember]
+        D --> E[5. World Model Train]
+        E --> F[6. GWT Cycle]
+    end
+    subgraph Metacognition [Phase 3: Self-Evaluation]
+        F --> G[7. Self-Model Update]
+        G --> H[8. Metacognitive Check]
+        H --> I[9. Reason]
+    end
+    subgraph Action [Phase 4: Output & Action]
+        I --> J[10. Goal-Biased Act]
+        J --> K[11. Predictive Processing]
+        K --> L[12. Conceptual Grounding]
+        L --> M[13. Active Inference]
+        M --> N[14. Developmental Learning]
+        N --> O[15. Curiosity & Empathy]
+        O --> P[16. Goal Genesis]
+        P --> Q[17. Phi Measurement]
+    end
+
+```
 
 The framework calculates state updates linearly via the `tick()` function across 17 distinct phases:
 
