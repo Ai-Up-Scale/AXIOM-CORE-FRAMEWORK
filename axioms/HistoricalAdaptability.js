@@ -50,15 +50,20 @@ export class HistoricalAdaptability {
     retrieveRelevantTrace(currentState) {
         if (this.traceBuffer.length === 0) return null;
 
-        // In a rigorous mathematical implementation, relevance is calculated via
-        // cosine similarity or minimum Euclidean distance between state vectors.
-        // For abstraction, we return the most recent low-error trace.
-        
+        const targetMu = (currentState && currentState.beliefs) ? currentState.beliefs : [0, 0];
         let bestTrace = this.traceBuffer[0];
-        for (let i = 1; i < this.traceBuffer.length; i++) {
+        let minScore = Infinity;
+
+        for (let i = 0; i < this.traceBuffer.length; i++) {
             const trace = this.traceBuffer[i];
-            // Prioritize traces with minimal historical prediction error
-            if (trace.predictionError < bestTrace.predictionError) {
+            const traceMu = (trace.state && trace.state.beliefs) ? trace.state.beliefs : [0, 0];
+            const dist = Math.hypot(
+                (traceMu[0] ?? 0) - (targetMu[0] ?? 0),
+                (traceMu[1] ?? 0) - (targetMu[1] ?? 0)
+            );
+            const score = dist + 0.05 * Math.max(0, trace.predictionError);
+            if (score < minScore) {
+                minScore = score;
                 bestTrace = trace;
             }
         }

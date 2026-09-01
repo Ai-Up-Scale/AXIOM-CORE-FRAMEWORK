@@ -1,12 +1,20 @@
 {
   "name": "axiom-core-framework",
   "version": "1.0.0-alpha",
-  "description": "Headless mathematical engine based on Active Inference and FEP.",
-  "main": "src/AxiomCore.js",
+  "description": "Headless mathematical engine based on Active Inference, Free Energy Principle, and Integrated Information Theory (IIT 4.0).",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node src/AxiomCore.js"
+    "test": "node --test tests/fesf_benchmarks.test.js",
+    "start": "node src/index.js"
   },
-  "author": "",
+  "keywords": [
+    "active-inference",
+    "free-energy-principle",
+    "integrated-information-theory",
+    "autopoiesis",
+    "cognitive-architecture"
+  ],
+  "author": "Razvan Alexe",
   "license": "MIT"
 }
