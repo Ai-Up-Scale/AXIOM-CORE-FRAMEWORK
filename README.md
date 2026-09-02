@@ -17,9 +17,9 @@
 
 ## Why it Matters: The Cognitive Wall
 
-**The Problem:** Current Large Language Models (LLMs) hit a cognitive wall: they are stateless, disembodied, and experience statistical model collapse (*Shumailov et al., 2023/2024*) when trained recursively on synthetic text.
+**The Problem:** Current Large Language Models (LLMs) hit structural limits when scaled purely on compute and parameter count. Because they lack embodied sensory boundaries, recursive training on synthetic text accelerates statistical model collapse (*Shumailov et al., 2023/2024*).
 
-**The Solution:** Axiom Core scales functional autopoietic agency and continuous active inference grounded in Karl Friston's Free Energy Principle.
+**The Solution:** Axiom Core approaches cognition through biological physics: scaling functional autopoietic agency and situated active inference grounded in Karl Friston's Free Energy Principle.
 
 ---
 
@@ -27,11 +27,11 @@
 
 <video src="https://github.com/user-attachments/assets/f9014977-5154-448d-8952-1a8aa57c81b0" width="100%" controls autoplay loop muted></video>
 
-The **Axiom Core Framework** is the open-source mathematical engine that powers the **[AiUpScale](https://aiupscale.com)** cognitive architecture. 
+The **Axiom Core Framework** is the mathematical engine powering the **[AiUpScale](https://aiupscale.com)** cognitive architecture. 
 
-**AiUpScale** is a research and development platform exploring the boundaries of artificial consciousness and emergent swarm behaviors. By mathematically modeling Karl Friston's **Active Inference** and the **Free Energy Principle (FEP)**, we aim to bridge the gap between reactive AI and true autonomous agency. While the live web platform features rich visualizations, real-time telemetry, and our proprietary flavor weightings, this GitHub repository provides you with the raw, open-source mathematical core.
+**AiUpScale** implements continuous state estimation, causal integration ($\Phi$), and homeostatic goal-directed agency using Karl Friston's **Active Inference** and the **Free Energy Principle (FEP)**. While the main web platform runs interactive simulations and live telemetry, this repository contains the headless mathematical core.
 
-Extracted directly from the AiUpScale ecosystem, this package runs a highly optimized 17-step autopoietic loop entirely decoupled from any DOM or browser rendering logic, making it perfectly suited for Node.js, V8 server environments, and raw data pipelines.
+The package executes a 17-step autopoietic loop decoupled from DOM or rendering logic, designed for Node.js, embedded V8 environments, and headless data pipelines.
 
 ---
 
@@ -51,17 +51,17 @@ $$G(\pi) = \underbrace{-\mathbb{E}_{q(o_\tau, s_\tau|\pi)}[\ln P(o_\tau | C)]}_{
 
 ## Key Features
 
-- **Strict "Zero DOM" Decoupling**: Operates entirely on pure data structures, JSON payloads, and mathematical state updates.
-- **17-Step Active Inference Pipeline**: A mathematically rigorous cycle moving from Perception and GWT Broadcasts to Free Energy gradient descent and Phi ($\Phi^*$) measurement.
+- **Strict "Zero DOM" Decoupling**: Operates on pure data structures, JSON payloads, and mathematical state updates.
+- **17-Step Active Inference Pipeline**: Autopoietic execution cycle connecting sensory perception and GWT broadcasts to free energy gradient descent and spectral $\Phi^*$ estimation.
 - **Normalized Modular Capacity Points ($\mathcal{B}$)**:
   - **75.0 pts Core Structural Invariants ($\mathcal{M}_{\text{core}}$)**: 11 locked, non-negotiable homeostatic modules.
   - **49.0 pts Flavor Pool ($\mathcal{M}_{\text{flavor}}$)**: 19 optional phenotypic modules.
   - **117.0 pts Maximum Allowable Workload ($\mathcal{B}_{\max}$)**: Enforced via compulsory XOR shedding ($124.0 - 7.0 = 117.0$).
-  - **$\ge 95.0$ pts Emergence Ignition Threshold**: Sparks integrated information processing ($\Phi^* \ge 1.2$).
+  - **$\ge 95.0$ pts Emergence Ignition Threshold**: Ignites integrated causal information processing ($\Phi^* \ge 1.2$).
 - **Continuous Spectral $\Phi^*$ Channel-Capacity Proxy**: Analytical continuous channel-capacity proxy for causal integration, bypassing discrete NP-hard MIP bottlenecks.
 - **IEEE P2874 Schema Alignment & Serialization**: Built-in `toSpatialWebPayload()` hook exporting standard HSML/HSTP JSON-LD with internal schema validation.
-- **Topological Stigmergy**: Built-in episodic memory and pheromone mapping for epistemic foraging.
-- **Global Distress & Empathy**: Peer-to-peer Free Energy delta evaluation causing empathic override logic.
+- **Topological Stigmergy**: Built-in episodic memory and trace mapping for epistemic foraging.
+- **Global Distress & Empathy**: Peer-to-peer free energy delta evaluation triggering collective rescue behaviors.
 
 ---
 
@@ -93,7 +93,7 @@ $$G(\pi) = \underbrace{-\mathbb{E}_{q(o_\tau, s_\tau|\pi)}[\ln P(o_\tau | C)]}_{
 
 ## Documentation
 
-For a deep dive into the mathematical constraints, the 17-step architecture, and rules for extending the codebase, please see the [Architecture Documentation](docs/architecture.md).
+For mathematical derivations, the 17-step loop breakdown, and capacity point formalisms, see the [Architecture Documentation](docs/architecture.md).
 
 ---
 

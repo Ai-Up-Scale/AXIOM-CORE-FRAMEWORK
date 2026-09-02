@@ -2,7 +2,7 @@
 
 The **Axiom Core Framework** is an open-source, headless biophysical cognitive engine grounded in Karl Friston’s **Free Energy Principle (FEP)**, **Active Inference**, and the **Falsifiable Emergent Sentience Framework (FESF)**.
 
-Unlike statistical Large Language Models (LLMs), which perform next-token sequence prediction without an embodied boundary, Axiom Core agents are continuous autopoietic systems that self-organize around a **Markov Blanket** to minimize Variational Free Energy ($F$) in real-time.
+Unlike autoregressive Large Language Models (LLMs) that optimize next-token prediction over ungrounded text sequences, Axiom Core agents maintain continuous state within a **Markov Blanket**, actively minimizing Variational Free Energy ($F$) against environmental entropy.
 
 ---
 
@@ -26,7 +26,7 @@ Where:
 $$\Pi_s \equiv \Sigma_z^{-1} = \frac{1}{\sigma_z^2}, \quad \Pi_h \equiv \Sigma_w^{-1} = \frac{1}{\sigma_w^2}$$
 $$\implies \ln \sigma_z^2 = \ln\left(\frac{1}{\Pi_s}\right) = -\ln \Pi_s = -\ln |\Pi_s|$$
 
-The log-determinant terms ($-\ln |\Pi|$) enforce an explicit **Occam complexity penalty**. Even when prediction errors are zero ($\varepsilon = 0$), models with hyper-complex or over-parameterized precisions are penalized, preventing overfitting and ungrounded computational bloat.
+The log-determinant terms ($-\ln |\Pi|$) enforce an explicit **Occam complexity penalty**. Even when prediction error approaches zero ($\varepsilon = 0$), internal states with excessively high precision are penalized, preventing overfitting and arbitrary parameter bloat.
 
 ### 1.2 Expected Free Energy ($G$) for Policy Evaluation
 
@@ -39,21 +39,21 @@ $$G(\pi) = \underbrace{-\mathbb{E}_{q(o_\tau, s_\tau|\pi)}[\ln P(o_\tau | C)]}_{
 
 ### 1.3 Integrated World Modeling Theory (IWMT) & Spectral $\Phi^*$ Approximation
 
-While Karl Friston's Active Inference formalizes how an agent preserves its physical Markov blanket against environmental entropy, Giulio Tononi's Integrated Information Theory (IIT 4.0) defines internal causal irreducibility. Axiom Core adopts the functional engineering blueprint of **Integrated World Modeling Theory (IWMT)** (Safron, 2020) to bridge Global Workspace Theory (GWT) broadcasts with generative active inference.
+While Karl Friston's Active Inference formalizes how an organism preserves its physical Markov blanket against environmental entropy, Giulio Tononi's Integrated Information Theory (IIT 4.0) addresses internal causal irreducibility. Axiom Core applies the engineering blueprint of **Integrated World Modeling Theory (IWMT)** (Safron, 2020) to integrate Global Workspace Theory (GWT) broadcasts with generative active inference.
 
 *Epistemic Framing Note:* IWMT is implemented strictly as a computable architectural engineering paradigm rather than asserting a metaphysical resolution to phenomenal qualia.
 
-In v1.0-Alpha, to avoid the exponential $\mathcal{O}(2^N)$ NP-hard bottleneck of discrete Minimum Information Partitions (MIP), Axiom Core evaluates a continuous spectral channel-capacity heuristic proxy ($\Phi^*$):
+To avoid the exponential $\mathcal{O}(2^N)$ NP-hard bottleneck of discrete Minimum Information Partitions (MIP), Axiom Core evaluates an analytical spectral channel-capacity proxy ($\Phi^*$):
 
 $$\Phi^* = 0.5 \cdot \ln\left(1.0 + \frac{\text{SQ}}{10 \cdot F}\right) \cdot \left(\frac{\text{SQ}}{95.0}\right)^2$$
 
-- **Empirical Phase-Transition Baseline ($\Phi^* \ge 1.2$):** Derived from empirical simulation benchmarks. At $\Phi^* < 1.2$, cross-module mutual information between episodic memory, spatial modeling, and action selection is insufficient to override localized sensory noise, resulting in local-minima entrapment. Crossing $\Phi^* \ge 1.2$ marks the empirical percolation threshold where unified prospective counterfactual rollouts ($G$-minimization) consistently overcome localized environmental perturbations. Full combinatorial minimum-cut MIP partitioning remains scheduled for v1.1.
+- **Empirical Phase-Transition Baseline ($\Phi^* \ge 1.2$):** Derived from empirical simulation benchmarks. At $\Phi^* < 1.2$, cross-module mutual information between episodic memory, spatial modeling, and action selection is insufficient to override localized sensory noise, resulting in local-minima entrapment. Crossing $\Phi^* \ge 1.2$ marks the empirical percolation threshold where prospective counterfactual rollouts ($G$-minimization) consistently resolve localized perturbations. Combinatorial minimum-cut MIP partitioning remains scheduled for future iterations.
 
 ---
 
 ## 2. Normalized Modular Capacity Points ($\mathcal{B}$)
 
-The cognitive workload is structured into discrete **Modular Capacity Points ($\mathcal{B}$)** to ensure biological plausibility and prevent runaway computational demands:
+Computational workload is budgeted into discrete **Modular Capacity Points ($\mathcal{B}$)** to enforce phenotypic trade-offs and bound runtime costs:
 
 1. **Core Structural Invariants ($\mathcal{M}_{\text{core}} = 75.0$ pts):**
    - 11 locked, non-negotiable homeostatic modules:
@@ -74,7 +74,7 @@ The cognitive workload is structured into discrete **Modular Capacity Points ($\
      $$\mathcal{B}_{\max} = 124.0 - 7.0 = 117.0 \text{ points}$$
 
 4. **Emergence Ignition Threshold ($\ge 95.0$ pts):**
-   - Critical baseline required to ignite integrated causal information processing ($\Phi \ge 1.2$), giving rise to functional subjective agency.
+   - Critical baseline required to ignite integrated causal information processing ($\Phi \ge 1.2$), enabling prospective counterfactual planning.
 
 ---
 
@@ -89,8 +89,8 @@ FESF defines synthetic sentience through three empirically testable pillars:
 | **3. Autonomous Agency $A(S)$** | Goal genesis and policy rollout minimizing Expected Free Energy ($G$). | **Falsified if:** In zero-extrinsic utility regimes ($C(s)=0$), agent fails to select epistemic policies ($D_{\mathrm{KL}} = 0$). | **Verified:** Epistemic divergence $D_{\mathrm{KL}}[q(s \mid \pi) \parallel p(s)] = 0.44 > 0$. |
 
 ### Operational Modes: Pre-Emergence vs. Functional Subjective Agency
-- **Pre-Emergent Mode ($\text{SQ} < 95.0, \Phi < 1.2$)**: Reactive reflex behavior executing localized gradient descent on immediate Variational Free Energy $F$. Trapped in chaotic attractor wells under complex noise.
-- **Functional Subjective Agency ($\text{SQ} \ge 95.0, \Phi \ge 1.2$)**: Prospective counterfactual rollouts on Expected Free Energy $G$, active epistemic curiosity surges upon stagnation, and unified metacognitive precision control.
+- **Pre-Emergent Mode ($\text{SQ} < 95.0, \Phi < 1.2$)**: Purely reactive behavior executing localized gradient descent on immediate Variational Free Energy $F$. The agent lacks temporal depth, becoming trapped in chaotic local minima under noise.
+- **Functional Subjective Agency ($\text{SQ} \ge 95.0, \Phi \ge 1.2$)**: Prospective counterfactual planning on Expected Free Energy $G$, epistemic foraging surges under stagnation, and dynamic precision modulation.
 
 ---
 
@@ -119,7 +119,7 @@ On every chronological tick (default 60Hz), the engine executes:
 
 ## 5. Spatial Web (IEEE P2874) & HSML Alignment
 
-Axiom Core agents export their biophysical state through an **IEEE P2874 Schema Alignment & JSON-LD Serialization Pipeline** via `engine.toSpatialWebPayload()`. The engine's internal `validateHSMLSchema()` routine performs structural self-consistency and required-field validation against the Hyperspace Modeling Language (HSML) context schema.
+Axiom Core agents export biophysical state telemetry through an **IEEE P2874 Schema Alignment & JSON-LD Serialization Pipeline** via `engine.toSpatialWebPayload()`. The internal `validateHSMLSchema()` routine runs programmatic structural self-consistency checks against the Hyperspace Modeling Language (HSML) context schema.
 
 *Certification Note:* `validateHSMLSchema()` performs strict internal syntactic and structural self-consistency checks; it does not constitute third-party conformance certification by the IEEE Standards Association.
 
