@@ -11,7 +11,7 @@ export class GenerativeModel {
      * @param {Object} [config]
      */
     constructor(config = {}) {
-        // Markov Blanket State Vectors (x, y coordinates / signals)
+        // Markov Blanket State Vectors
         this.sensoryStates = { y: [1.0, 1.0], yDot: [0, 0] };
         this.internalBeliefs = { mu: [1.0, 1.0], muDot: [0, 0] };
         this.activeStates = { a: [0, 0] };
@@ -43,14 +43,22 @@ export class GenerativeModel {
     }
 
     /**
-     * Ingest observations across the sensory Markov blanket.
+     * Ingest observations across the sensory Markov blanket and synchronize homeostatic goal.
      * @param {Array<number>} observations - [signal, target] or [x, y]
+     * @param {Array<number>|number|null} [targetPrior=null] - Dynamic homeostatic setpoint
      */
-    perceive(observations) {
+    perceive(observations, targetPrior = null) {
         if (!Array.isArray(observations) || observations.length === 0) return;
         
         const prevSensory = [...this.sensoryStates.y];
         this.sensoryStates.y = [...observations];
+
+        // Synchronize homeostatic target prior if provided
+        if (targetPrior !== null) {
+            this.setHomeostaticPrior(targetPrior);
+        } else if (observations.length > 1 && observations[1] !== undefined) {
+            this.setHomeostaticPrior([observations[1], observations[1]]);
+        }
 
         // Sensory prediction error: \varepsilon_y = y - g(\mu)
         this.predictionErrors.sensory = this.sensoryStates.y.map(
@@ -59,6 +67,18 @@ export class GenerativeModel {
 
         // Generalized motion coordinate approximation
         this.sensoryStates.yDot = this.sensoryStates.y.map((v, i) => v - (prevSensory[i] ?? v));
+    }
+
+    /**
+     * Synchronizes the internal homeostatic goal attractor (prior C).
+     * @param {Array<number>|number} target
+     */
+    setHomeostaticPrior(target) {
+        if (Array.isArray(target)) {
+            this.homeostaticPriors.targetPosition = [target[0] ?? 1.0, target[1] ?? target[0] ?? 1.0];
+        } else if (typeof target === 'number') {
+            this.homeostaticPriors.targetPosition = [target, target];
+        }
     }
 
     /**
@@ -117,7 +137,6 @@ export class GenerativeModel {
 
         let bestAction = candidateActions[0];
         let minG = Infinity;
-        const eyMag = Math.hypot(...this.predictionErrors.sensory);
 
         for (const action of candidateActions) {
             const hypMuX = this.internalBeliefs.mu[0] + action[0] * 0.1;

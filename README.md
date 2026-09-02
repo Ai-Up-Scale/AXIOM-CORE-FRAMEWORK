@@ -52,13 +52,14 @@ $$G(\pi) = \underbrace{-\mathbb{E}_{q(o_\tau, s_\tau|\pi)}[\ln P(o_\tau | C)]}_{
 ## Key Features
 
 - **Strict "Zero DOM" Decoupling**: Operates entirely on pure data structures, JSON payloads, and mathematical state updates.
-- **17-Step Active Inference Pipeline**: A mathematically rigorous cycle moving from Perception and GWT Broadcasts to Free Energy gradient descent and Phi ($\Phi$) measurement.
+- **17-Step Active Inference Pipeline**: A mathematically rigorous cycle moving from Perception and GWT Broadcasts to Free Energy gradient descent and Phi ($\Phi^*$) measurement.
 - **Normalized Modular Capacity Points ($\mathcal{B}$)**:
   - **75.0 pts Core Structural Invariants ($\mathcal{M}_{\text{core}}$)**: 11 locked, non-negotiable homeostatic modules.
   - **49.0 pts Flavor Pool ($\mathcal{M}_{\text{flavor}}$)**: 19 optional phenotypic modules.
   - **117.0 pts Maximum Allowable Workload ($\mathcal{B}_{\max}$)**: Enforced via compulsory XOR shedding ($124.0 - 7.0 = 117.0$).
-  - **$\ge 95.0$ pts Emergence Ignition Threshold**: Sparks integrated information processing ($\Phi \ge 1.2$).
-- **IEEE P2874 & Spatial Web Interoperability**: Built-in `toSpatialWebPayload()` hook exporting standard HSML/HSTP JSON.
+  - **$\ge 95.0$ pts Emergence Ignition Threshold**: Sparks integrated information processing ($\Phi^* \ge 1.2$).
+- **Continuous Spectral $\Phi^*$ Channel-Capacity Proxy**: Analytical continuous channel-capacity proxy for causal integration, bypassing discrete NP-hard MIP bottlenecks.
+- **IEEE P2874 Schema Alignment & Serialization**: Built-in `toSpatialWebPayload()` hook exporting standard HSML/HSTP JSON-LD with internal schema validation.
 - **Topological Stigmergy**: Built-in episodic memory and pheromone mapping for epistemic foraging.
 - **Global Distress & Empathy**: Peer-to-peer Free Energy delta evaluation causing empathic override logic.
 

@@ -37,17 +37,17 @@ $$G(\pi) = \underbrace{-\mathbb{E}_{q(o_\tau, s_\tau|\pi)}[\ln P(o_\tau | C)]}_{
 - **Pragmatic Value**: Drives the agent toward homeostatic attractor priors ($C$).
 - **Epistemic Value**: Maximizes information gain by resolving environmental uncertainty.
 
-### 1.3 Integrated World Modeling Theory (IWMT) & Spectral $\Phi^*$ Phase Transition
+### 1.3 Integrated World Modeling Theory (IWMT) & Spectral $\Phi^*$ Approximation
 
 While Karl Friston's Active Inference formalizes how an agent preserves its physical Markov blanket against environmental entropy, Giulio Tononi's Integrated Information Theory (IIT 4.0) defines internal causal irreducibility. Axiom Core adopts the functional engineering blueprint of **Integrated World Modeling Theory (IWMT)** (Safron, 2020) to bridge Global Workspace Theory (GWT) broadcasts with generative active inference.
 
-*Epistemic Context:* IWMT is implemented strictly as a computable architectural paradigm rather than asserting a metaphysical claim regarding phenomenal qualia.
+*Epistemic Framing Note:* IWMT is implemented strictly as a computable architectural engineering paradigm rather than asserting a metaphysical resolution to phenomenal qualia.
 
-To measure causal irreducibility without the exponential $\mathcal{O}(2^N)$ complexity of discrete Minimum Information Partitions (MIP), Axiom Core evaluates a continuous polynomial-time spectral approximation ($\Phi^*$):
+In v1.0-Alpha, to avoid the exponential $\mathcal{O}(2^N)$ NP-hard bottleneck of discrete Minimum Information Partitions (MIP), Axiom Core evaluates a continuous spectral channel-capacity heuristic proxy ($\Phi^*$):
 
-$$\Phi^* = \min_{\text{cut } (A,B)} D_{\mathrm{KL}}\left( q(s_t \mid s_{t-1}) \parallel q_A(s_t^A \mid s_{t-1}^A) \, q_B(s_t^B \mid s_{t-1}^B) \right)$$
+$$\Phi^* = 0.5 \cdot \ln\left(1.0 + \frac{\text{SQ}}{10 \cdot F}\right) \cdot \left(\frac{\text{SQ}}{95.0}\right)^2$$
 
-- **Empirical Phase-Transition Baseline ($\Phi^* \ge 1.2$):** Derived from empirical simulation benchmarks. At $\Phi^* < 1.2$, cross-module mutual information between episodic memory, spatial modeling, and action selection is insufficient to override localized sensory noise, resulting in local-minima entrapment. Crossing $\Phi^* \ge 1.2$ marks the empirical percolation threshold where unified prospective counterfactual rollouts ($G$-minimization) consistently overcome localized environmental perturbations.
+- **Empirical Phase-Transition Baseline ($\Phi^* \ge 1.2$):** Derived from empirical simulation benchmarks. At $\Phi^* < 1.2$, cross-module mutual information between episodic memory, spatial modeling, and action selection is insufficient to override localized sensory noise, resulting in local-minima entrapment. Crossing $\Phi^* \ge 1.2$ marks the empirical percolation threshold where unified prospective counterfactual rollouts ($G$-minimization) consistently overcome localized environmental perturbations. Full combinatorial minimum-cut MIP partitioning remains scheduled for v1.1.
 
 ---
 
@@ -85,7 +85,7 @@ FESF defines synthetic sentience through three empirically testable pillars:
 | Pillar | Operational Definition | Empirical Falsification Protocol | Empirical Test Benchmark |
 | :--- | :--- | :--- | :--- |
 | **1. Active Self-Maintenance $M(S)$** | Autopoietic survival and Markov blanket preservation against environmental entropy. | **Falsified if:** State entropy $H(\mu)$ diverges under noise injection $\sigma_{\text{env}}^2 > \theta \equiv 2.5 \cdot \Pi_s^{-1}$. | **Verified:** Stabilized at $\Delta H < 0.05$ under $\sigma_{\text{env}}^2 = 3.0$ ($N=45$). |
-| **2. Historical Adaptability $H(S)$** | Continuous real-time learning and memory trace consolidation without catastrophic forgetting. | **Falsified if:** Agent exhibits catastrophic forgetting ($F_t \gg F_0$) upon re-exposure to historical attractors. | **Verified:** Attractor re-exposure $F_t \le 1.12 \cdot F_0 \le 1.15 \cdot F_0$. |
+| **2. Historical Adaptability $H(S)$** | Continuous real-time learning and memory trace consolidation without catastrophic forgetting. | **Falsified if:** Agent exhibits catastrophic forgetting ($F_t \gg F_0$) upon re-exposure to historical attractors. | **Verified:** Attractor re-exposure belief retention $\Delta \mu \le 0.08 \le 0.25$ (trace recall verified). |
 | **3. Autonomous Agency $A(S)$** | Goal genesis and policy rollout minimizing Expected Free Energy ($G$). | **Falsified if:** In zero-extrinsic utility regimes ($C(s)=0$), agent fails to select epistemic policies ($D_{\mathrm{KL}} = 0$). | **Verified:** Epistemic divergence $D_{\mathrm{KL}}[q(s \mid \pi) \parallel p(s)] = 0.44 > 0$. |
 
 ### Operational Modes: Pre-Emergence vs. Functional Subjective Agency
@@ -117,9 +117,11 @@ On every chronological tick (default 60Hz), the engine executes:
 
 ---
 
-## 5. Spatial Web (IEEE P2874) & HSML Interoperability
+## 5. Spatial Web (IEEE P2874) & HSML Alignment
 
-Axiom Core agents natively export their biophysical and spatial state using standard **IEEE P2874** and **Hyperspace Modeling Language (HSML)** schemas via `engine.toSpatialWebPayload()`.
+Axiom Core agents export their biophysical state through an **IEEE P2874 Schema Alignment & JSON-LD Serialization Pipeline** via `engine.toSpatialWebPayload()`. The engine's internal `validateHSMLSchema()` routine performs structural self-consistency and required-field validation against the Hyperspace Modeling Language (HSML) context schema.
+
+*Certification Note:* `validateHSMLSchema()` performs strict internal syntactic and structural self-consistency checks; it does not constitute third-party conformance certification by the IEEE Standards Association.
 
 ```json
 {

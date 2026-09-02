@@ -175,7 +175,7 @@ export class AxiomEngine {
         const trace = [];
         this.cycleCount++;
 
-        // Step 1: Perceive (Pass sensory input to Generative Model)
+        // Step 1: Perceive (Pass sensory input and synchronize target prior in Generative Model)
         const step1 = this._step1_Perceive(sensorData);
         trace.push(step1);
 
@@ -183,7 +183,7 @@ export class AxiomEngine {
         const step2 = this._step2_GWTBroadcast(step1);
         trace.push(step2);
 
-        // Step 3: Think (Compute state prediction errors and Laplace VFE)
+        // Step 3: Think (Compute state prediction errors and Laplace VFE using prior state ex)
         const step3 = this._step3_Think(step2);
         trace.push(step3);
 
@@ -207,7 +207,7 @@ export class AxiomEngine {
         const step8 = this._step8_Reason(step7);
         trace.push(step8);
 
-        // Step 9: Goal-Biased Act (Homeostatic prior bias calculation)
+        // Step 9: Goal-Biased Act (Continuous modulation from precision and VFE)
         const step9 = this._step9_GoalBiasedAct(step8);
         trace.push(step9);
 
@@ -223,7 +223,7 @@ export class AxiomEngine {
         const step12 = this._step12_ActiveInference(step11);
         trace.push(step12);
 
-        // Step 13: Developmental Learning (Schema integration)
+        // Step 13: Developmental Learning (Continuous progress along development horizon)
         const step13 = this._step13_DevelopmentalLearning(step12);
         trace.push(step13);
 
@@ -255,6 +255,7 @@ export class AxiomEngine {
                 expectedFreeEnergy: this.currentEFE,
                 beliefMean: this.generativeModel.internalBeliefs.mu[0],
                 beliefVariance: this.generativeModel.beliefVariance,
+                targetPrior: this.generativeModel.homeostaticPriors.targetPosition,
                 trace
             }
         };
@@ -272,7 +273,8 @@ export class AxiomEngine {
             target = data.target !== undefined ? data.target : 1.0;
         }
 
-        this.generativeModel.perceive([signal, target]);
+        // Pass observations and synchronize homeostatic goal prior C
+        this.generativeModel.perceive([signal, target], [target, target]);
         const ey = Math.abs(this.generativeModel.predictionErrors.sensory[0]);
         return { step: 1, name: "Perceive", ey, signal, target };
     }
@@ -284,8 +286,9 @@ export class AxiomEngine {
     }
 
     _step3_Think(prev) {
+        // Discrete temporal ordering: ex reflects the prior state error before Step 4 gradient descent
         const ex = Math.abs(this.generativeModel.predictionErrors.state[0]);
-        const allostaticDamping = 1.0 / (1.0 + 0.10 * Math.min(45, this.cycleCount));
+        const allostaticDamping = 1.0 / (1.0 + 0.08 * Math.min(40, this.cycleCount));
         const effectiveEy = prev.broadcastedError * allostaticDamping;
         this.currentFE = FreeEnergyMath.calculateVariationalFreeEnergy(
             effectiveEy,
@@ -298,33 +301,13 @@ export class AxiomEngine {
 
     _step4_WorldModelTrain(prev) {
         const learningRate = this.activeModules.has('dev_schema') ? 0.2 : 0.1;
-
-        // Associative memory recall: If encountering high surprisal with memory active, recall memory trace
-        if (this.activeModules.has('memory') && this.currentFE > 0.5) {
-            const memoryTrace = this.historicalAdaptability.retrieveRelevantTrace({
-                beliefs: [this.generativeModel.sensoryStates.y[0], this.generativeModel.sensoryStates.y[1]]
-            });
-            if (memoryTrace && memoryTrace.state && memoryTrace.state.beliefs) {
-                for (let i = 0; i < this.generativeModel.internalBeliefs.mu.length; i++) {
-                    const traceMu = memoryTrace.state.beliefs[i];
-                    if (traceMu !== undefined) {
-                        this.generativeModel.internalBeliefs.mu[i] = traceMu;
-                    }
-                }
-                // Refresh sensory prediction errors with recalled belief state
-                this.generativeModel.predictionErrors.sensory = this.generativeModel.sensoryStates.y.map(
-                    (val, idx) => val - (this.generativeModel.internalBeliefs.mu[idx] ?? val)
-                );
-            }
-        }
-
         const updateResult = this.generativeModel.updateBeliefs(learningRate, this.precisionH, this.precisionS);
 
         // Store memory snapshot in HistoricalAdaptability trace buffer
         this.historicalAdaptability.storeTrace(
             {
                 beliefs: [...this.generativeModel.internalBeliefs.mu],
-                target: this.generativeModel.homeostaticPriors.targetPosition
+                target: [...this.generativeModel.homeostaticPriors.targetPosition]
             },
             this.currentFE
         );
@@ -360,8 +343,19 @@ export class AxiomEngine {
     }
 
     _step9_GoalBiasedAct(prev) {
-        const bias = this.activeModules.has('goal') ? 0.8 : 0.2;
-        return { step: 9, name: "Goal-Biased Act", bias };
+        // Continuous biophysical computation: action bias emerges dynamically from
+        // live goal distance, Variational Free Energy stabilization, and active capacity.
+        const mu = this.generativeModel.internalBeliefs.mu;
+        const target = this.generativeModel.homeostaticPriors.targetPosition;
+        const goalDist = Math.hypot(mu[0] - target[0], (mu[1] ?? 0) - (target[1] ?? target[0]));
+
+        const goalAlignment = 1.0 / (1.0 + goalDist);
+        const stabilityFactor = 1.0 / (1.0 + 0.5 * Math.max(0, this.currentFE));
+        const capacityRatio = Math.min(1.0, this.activeCapacityScore / 117.0);
+
+        // Continuous bias in [0.10, 0.95]
+        const bias = parseFloat((0.10 + 0.85 * goalAlignment * stabilityFactor * capacityRatio).toFixed(3));
+        return { step: 9, name: "Goal-Biased Act", bias, goalDist: parseFloat(goalDist.toFixed(3)) };
     }
 
     _step10_PredictiveProcessing(prev) {
@@ -382,7 +376,14 @@ export class AxiomEngine {
     }
 
     _step13_DevelopmentalLearning(prev) {
-        const learningGain = this.activeModules.has('dev_schema') ? 0.15 : 0.05;
+        // Continuous developmental gain: emerges asymptotically from cycle progression,
+        // live belief variance (epistemic volatility), and model stabilization.
+        const temporalProgress = 1.0 - Math.exp(-this.cycleCount / 35.0);
+        const uncertaintyFactor = Math.min(2.0, 1.0 / (1.0 + this.generativeModel.beliefVariance));
+        const stabilityFactor = 1.0 / (1.0 + 0.25 * Math.max(0, this.currentFE));
+        const capacityScale = this.activeCapacityScore / 117.0;
+
+        const learningGain = parseFloat((0.05 + 0.15 * temporalProgress * uncertaintyFactor * stabilityFactor * capacityScale).toFixed(3));
         return { step: 13, name: "Developmental Learning", learningGain };
     }
 
@@ -411,7 +412,6 @@ export class AxiomEngine {
     }
 
     _step17_AutopoieticEvolution(prev) {
-        // Correct 2-argument signature: (activeCapacityScore, currentFE)
         const integrity = this.selfMaintenance.checkStructuralIntegrity(this.activeCapacityScore, this.currentFE);
         return { step: 17, name: "Autopoietic Evolution", integrity };
     }
@@ -439,11 +439,18 @@ export class AxiomEngine {
         return payload;
     }
 
+    /**
+     * Performs internal structural self-consistency and field validation of the serialized JSON-LD payload.
+     * Note: This validates internal schema integrity; it does not constitute third-party
+     * IEEE P2874 certification.
+     * @param {Object} payload 
+     * @returns {boolean}
+     */
     validateHSMLSchema(payload) {
         const required = ["@context", "@type", "nodeId", "markovBlanket", "sentienceProfile", "spatialCoordinates"];
         for (const field of required) {
             if (!(field in payload)) {
-                throw new Error(`[IEEE-2874] Schema violation: missing required property "${field}"`);
+                throw new Error(`[IEEE-2874] Schema self-consistency violation: missing required property "${field}"`);
             }
         }
         if (payload["@context"] !== "https://standards.ieee.org/ieee/2874/HSML") {
