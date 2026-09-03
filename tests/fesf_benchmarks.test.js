@@ -103,3 +103,42 @@ test('IEEE P2874 HSML Schema Validation', () => {
     assert.equal(payload["@context"], "https://standards.ieee.org/ieee/2874/HSML");
     assert.equal(typeof payload.markovBlanket.variationalFreeEnergy, "number");
 });
+
+test('AutonomousAgency: Epistemic Surge Drives Exploratory Policy under Volitional Drive', async () => {
+    const engine = new AxiomEngine({ mode: 'headless' });
+    engine.activeModules.add('volitional');
+    await engine.startAutopoiesis();
+
+    // Settle in a predictable state where EFE approaches 0 (< boredomThreshold 0.5)
+    engine.currentEFE = 0.05;
+    const result = engine.perceive({ signal: 1.0, target: 1.0 });
+    const step12 = result.state.trace.find(s => s.step === 12);
+
+    assert.ok(step12 !== undefined, 'Step 12 must be present in autopoietic trace');
+    assert.equal(step12.epistemicDrive, 2.5, `AutonomousAgency must generate an epistemic surge multiplier of 2.5 when EFE is below boredom threshold`);
+    assert.notDeepEqual(step12.actionVector, [0, 0], `Epistemic surge must force exploratory action policy away from stagnant [0, 0]`);
+});
+
+test('HistoricalAdaptability: Endogenous Trace Recovery under Context Perturbation (Episodic Sim)', async () => {
+    const engine = new AxiomEngine({ mode: 'headless' });
+    engine.activeModules.add('episodic_sim');
+    await engine.startAutopoiesis();
+
+    // Settle at Attractor A (target = 2.0)
+    for (let t = 0; t < 10; t++) {
+        engine.perceive({ signal: 2.0, target: 2.0 });
+    }
+    const settledA = engine.generativeModel.internalBeliefs.mu[0];
+
+    // Perturbation: Shift to Attractor B (target = 8.0)
+    for (let t = 0; t < 20; t++) {
+        engine.perceive({ signal: 8.0, target: 8.0 });
+    }
+
+    // Re-expose to Attractor A: Step 4 endogenous trace recovery fires automatically
+    engine.perceive({ signal: 2.0, target: 2.0 });
+    const recovered = engine.generativeModel.internalBeliefs.mu[0];
+    const delta = Math.abs(recovered - settledA);
+
+    assert.ok(delta < 0.1, `Endogenous memory trace recovery must restore belief near Attractor A (delta = ${delta.toFixed(4)} < 0.1)`);
+});

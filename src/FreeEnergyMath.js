@@ -18,8 +18,8 @@ export class FreeEnergyMath {
      * @returns {number} Computed Variational Free Energy
      */
     static calculateVariationalFreeEnergy(ey, ex, ps, ph) {
-        const safePs = Math.max(0.0001, ps);
-        const safePh = Math.max(0.0001, ph);
+        const safePs = Math.max(0.0001, Number(ps) || 0.0001);
+        const safePh = Math.max(0.0001, Number(ph) || 0.0001);
 
         const sensoryAccuracy = safePs * (ey * ey);
         const sensoryComplexity = -Math.log(safePs);

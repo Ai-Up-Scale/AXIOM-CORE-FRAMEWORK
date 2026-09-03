@@ -288,7 +288,10 @@ export class AxiomEngine {
     _step3_Think(prev) {
         // Discrete temporal ordering: ex reflects the prior state error before Step 4 gradient descent
         const ex = Math.abs(this.generativeModel.predictionErrors.state[0]);
-        const allostaticDamping = 1.0 / (1.0 + 0.08 * Math.min(40, this.cycleCount));
+        const isAllostaticActive = this.activeModules.has('allostatic') || (this.mode === 'headless' && this.enforceConstraints && this.activeCapacityScore <= 75.0);
+        const allostaticDamping = isAllostaticActive
+            ? 1.0 / (1.0 + 0.08 * Math.min(40, this.cycleCount))
+            : 1.0;
         const effectiveEy = prev.broadcastedError * allostaticDamping;
         this.currentFE = FreeEnergyMath.calculateVariationalFreeEnergy(
             effectiveEy,
@@ -311,6 +314,16 @@ export class AxiomEngine {
             },
             this.currentFE
         );
+
+        // Endogenous trace retrieval guarded by episodic_sim flavor module under high surprisal / context shift
+        if (this.activeModules.has('episodic_sim') && this.currentFE > 1.5) {
+            const trace = this.historicalAdaptability.retrieveRelevantTrace({
+                beliefs: this.generativeModel.homeostaticPriors.targetPosition
+            });
+            if (trace && trace.state && trace.state.beliefs) {
+                this.generativeModel.internalBeliefs.mu[0] = trace.state.beliefs[0];
+            }
+        }
 
         return {
             step: 4,
@@ -365,14 +378,31 @@ export class AxiomEngine {
 
     _step11_ConceptualGrounding(prev) {
         const grounded = this.activeModules.has('concept');
+        if (this.activeModules.has('anchor') || this.activeModules.has('dev_schema')) {
+            this.stigmergy.dropBreadcrumb(this.position);
+        }
         return { step: 11, name: "Conceptual Grounding", grounded, coordinates: this.position };
     }
 
     _step12_ActiveInference(prev) {
-        const isCurious = this.activeModules.has('curiosity') || this.activeModules.has('foraging');
-        const policyResult = this.generativeModel.selectActionPolicy(isCurious);
+        let epistemicMultiplier = 1.0;
+        if (this.activeModules.has('volitional')) {
+            epistemicMultiplier = this.autonomousAgency.evaluateEpistemicDrive(this.currentEFE);
+            this.epistemicDrive = epistemicMultiplier;
+        }
+        // Epistemic foraging can be triggered either continuously via dedicated trait modules
+        // ('curiosity' / 'foraging'), or transiently via an emergency boredom-breaking surge
+        // when 'volitional' detects environmental stagnation (|EFE| < 0.5).
+        const isCurious = this.activeModules.has('curiosity') || this.activeModules.has('foraging') || (epistemicMultiplier > 1.0);
+        const policyResult = this.generativeModel.selectActionPolicy(isCurious, epistemicMultiplier);
         this.currentEFE = policyResult.minG;
-        return { step: 12, name: "Active Inference", actionVector: policyResult.bestAction, currentEFE: this.currentEFE };
+        return {
+            step: 12,
+            name: "Active Inference",
+            actionVector: policyResult.bestAction,
+            currentEFE: this.currentEFE,
+            epistemicDrive: epistemicMultiplier
+        };
     }
 
     _step13_DevelopmentalLearning(prev) {

@@ -128,15 +128,17 @@ export class GenerativeModel {
     /**
      * Evaluate action policies minimizing Expected Free Energy (G).
      * @param {boolean} isCurious - Whether epistemic foraging is active
+     * @param {number} epistemicMultiplier - Epistemic drive multiplier from AutonomousAgency
      * @returns {{ bestAction: Array<number>, minG: number }}
      */
-    selectActionPolicy(isCurious = false) {
+    selectActionPolicy(isCurious = false, epistemicMultiplier = 1.0) {
         const candidateActions = [
             [0, 1], [0, -1], [1, 0], [-1, 0], [0.707, 0.707], [-0.707, -0.707], [0, 0]
         ];
 
         let bestAction = candidateActions[0];
         let minG = Infinity;
+        const dispersion = 1.5 * (epistemicMultiplier || 1.0);
 
         for (const action of candidateActions) {
             const hypMuX = this.internalBeliefs.mu[0] + action[0] * 0.1;
@@ -151,8 +153,8 @@ export class GenerativeModel {
                 goalDist,
                 this.precisions.sensory,
                 isCurious,
-                1.5,
-                this.internalBeliefs.mu[0],
+                dispersion,
+                hypMuX,
                 this.beliefVariance
             );
 

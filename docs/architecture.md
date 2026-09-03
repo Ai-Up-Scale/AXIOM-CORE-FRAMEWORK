@@ -97,23 +97,23 @@ FESF defines synthetic sentience through three empirically testable pillars:
 ## 4. The 17-Step Autopoietic Cycle
 
 On every chronological tick (default 60Hz), the engine executes:
-1. **Sensory Ingestion (`perceive`)**: Ingests observations across boundary sensors.
-2. **Markov Blanket Verification**: Validates sensory-active partitions.
-3. **Cognitive Reaction**: Rapid reflex and salience allocation.
-4. **Episodic Memory Retrieval**: Pulls relevant past traces.
-5. **Predictive Processing**: Computes precision-weighted sensory prediction errors.
-6. **Spatial World Model**: Updates coordinate representations in 3D topology.
-7. **Global Workspace Broadcast**: Broadcasts high-salience signals across active modules.
-8. **Self-Model Schema Assimilation**: Integrates internal state changes into self-representation.
-9. **Metacognitive Surprisal Audit**: Computes total Variational Free Energy $F$.
-10. **Logical Reasoning**: Evaluates deductive constraints.
-11. **Temporal Trace Binding**: Consolidates history buffer.
-12. **Conceptual Grounding**: Anchors abstract categories to sensory causes.
-13. **Active Policy Selection**: Evaluates candidate actions minimizing Expected Free Energy $G$.
-14. **Developmental Learning**: Adjusts generative transition beliefs.
-15. **Epistemic Curiosity Reward**: Rewards entropy reduction.
-16. **Goal Genesis & Counterfactuals**: Generates allostatic goals.
-17. **Causal Integration ($\Phi$)**: Evaluates spectral integrated information metric $\Phi^*$.
+1. **Perceive (`_step1_Perceive`)**: Encodes raw sensory observations across boundary sensors into prediction errors ($\varepsilon_y = y - \mu$).
+2. **GWT Broadcast (`_step2_GWTBroadcast`)**: Evaluates sensory error salience via precision weighting and flags high-salience signals for global broadcast.
+3. **Think (`_step3_Think`)**: Evaluates state prediction error, applies guarded allostatic damping, and computes Variational Free Energy $F$.
+4. **World Model Train (`_step4_WorldModelTrain`)**: Executes gradient descent belief updates, logs cognitive state traces to HistoricalAdaptability, and triggers episodic trace recovery under elevated surprisal when `episodic_sim` is active.
+5. **GWT Cycle (`_step5_GWTCycle`)**: Computes integrated precision across sensory and state channels.
+6. **Self-Model Update (`_step6_SelfModelUpdate`)**: Updates internal confidence calibration as an inverse function of current Free Energy.
+7. **Metacognitive Check (`_step7_MetacognitiveCheck`)**: Flags metacognitive stress state when Variational Free Energy exceeds precision-scaled perturbation bounds.
+8. **Reason (`_step8_Reason`)**: Evaluates deductive reasoning depth and logical belief consistency scaled by the `logic` module.
+9. **Goal-Biased Act (`_step9_GoalBiasedAct`)**: Calculates continuous goal-directed action bias as a function of goal proximity, Free Energy stabilization, and active capacity.
+10. **Predictive Processing (`_step10_PredictiveProcessing`)**: Calculates precision-weighted residual error from current Free Energy.
+11. **Conceptual Grounding (`_step11_ConceptualGrounding`)**: Verifies conceptual grounding and deposits spatial stigmergic markers when `anchor` or `dev_schema` is active.
+12. **Active Inference (`_step12_ActiveInference`)**: Minimizes Expected Free Energy $G$ across candidate actions, applying epistemic drive surges from AutonomousAgency when `volitional` detects stagnation (transiently activating epistemic foraging).
+13. **Developmental Learning (`_step13_DevelopmentalLearning`)**: Computes continuous developmental learning gain from cycle progression, epistemic volatility, and stability.
+14. **Curiosity Reward (`_step14_CuriosityReward`)**: Computes epistemic information gain ($D_{\mathrm{KL}}$) when `curiosity` is active.
+15. **Goal Genesis (`_step15_GoalGenesis`)**: Determines prospective action search branching factor (`simulatedPaths`), expanding from 1 to 5 when `volitional` is active.
+16. **Phi Measurement (`_step16_PhiMeasurement`)**: Evaluates continuous spectral integrated information $\Phi^*$ and determines subjective emergence threshold.
+17. **Autopoietic Evolution (`_step17_AutopoieticEvolution`)**: Assesses structural autopoietic integrity and stability against the $75.0$ baseline survival threshold.
 
 ---
 
@@ -127,32 +127,26 @@ Axiom Core agents export biophysical state telemetry through an **IEEE P2874 Sch
 {
   "@context": "https://standards.ieee.org/ieee/2874/HSML",
   "@type": "SpatialAgentNode",
-  "id": "did:spatial:axiom:1725177600000",
-  "timestamp": "2026-09-01T12:00:00.000Z",
+  "nodeId": "did:spatial:axiom:1725177600000",
+  "timestamp": 1725177600000,
   "markovBlanket": {
     "sensoryPrecision": 1.5,
-    "statePrecision": 1.0,
-    "boundaryIntegrity": "INTACT"
+    "internalPrecision": 1.0,
+    "variationalFreeEnergy": 0.84,
+    "expectedFreeEnergy": 0.42
   },
   "sentienceProfile": {
-    "framework": "ActiveInference-Laplace",
-    "sentienceQuotient": 105.0,
-    "emergence": true,
-    "capacityPoints": {
-      "allocated": 105.0,
-      "maxAllowed": 117.0,
-      "coreBase": 75.0
-    }
+    "modularCapacityPoints": 105.0,
+    "spectralPhi": 1.70,
+    "isSentient": true
   },
-  "spectralPhi": 1.70,
   "spatialCoordinates": {
-    "position": [12.4, -4.2, 0.0],
-    "velocity": [0.1, 0.0, 0.0],
-    "referenceFrame": "HSTP-Euclidean-3D"
+    "x": 12.4,
+    "y": -4.2
   },
   "activeModules": {
     "core": ["perceive", "markov", "dynamic", "predict", "memory", "world", "temporal", "concept", "active", "goal", "cog_react"],
-    "flavor": ["entropy", "anchor", "thermo", "self_model", "curiosity", "gwt", "creative"]
+    "flavor": ["entropy", "anchor", "thermo", "schema_assim", "curiosity", "gwt", "volitional", "counterfactual"]
   }
 }
 ```
